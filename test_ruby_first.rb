@@ -83,6 +83,7 @@ music_instruments_hash = {
 
 p "Music instruments first elements type is type: #{music_instruments_hash[:cello]}"
 
+#iterating with a block and params...
 music_instruments_hash.each { |key, value| puts "key: #{key}, value: #{value}" } 
 
 #control structures
@@ -128,3 +129,31 @@ test_string_for_regex = 'Some of scrypting languages are Ruby and Perl.'
 if test_string_for_regex =~ /Ruby .*Perl/
   p 'there is a scrypting lang'
 end
+
+#blocks and more
+def who_says_what
+  yield('Dave','hello')
+  yield('Jane','hi')
+end
+
+#params... in block, yield repeats block exec
+who_says_what{ |person, phrase| puts"#{person}, says #{phrase}"}
+
+animals = %w{ lion tiger puma }
+
+#iterating
+animals.each { |animal| puts "dangerous cats #{animal}"}
+
+
+#similar to for loop
+5.times { print '*'}
+
+#program arguments
+puts "You gave a #{ARGV.size} arguments"
+
+#p ARGV
+
+counter = 0
+ARGV.each { | arg | p arg }
+
+#2.1 end
