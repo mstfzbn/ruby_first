@@ -1,5 +1,8 @@
 #! /usr/bin/ruby
 
+require_relative 'words_from_string'
+require_relative 'count_frequency'
+
 #page 49
 
 #containers, blocks and iterators
@@ -61,22 +64,6 @@ for i in 0...8
     #something
 end
 
-
-#chek again page 49
-#check this string.downcase.scan( for_something ) two functions together
-def words_from_string(string)
-    string.downcase.scan(/[\w']+/)
-end
-
-def count_frequency(word_list)
-    counts = Hash.new(0)
-
-    for word in word_list
-      counts[word] += 1
-    end
-
-    counts
-end
 
 raw_text = %{The problem breaks down into two parts. First, given some text
     as a string, return a list of words. That sounds like an array. Then, build
