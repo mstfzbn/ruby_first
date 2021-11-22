@@ -88,3 +88,61 @@ result = []
 p result
 
 #enumerators are Generators and Filters page 59
+
+#enumerator, that generates an infinity sequence
+triangular_numbers = Enumerator.new do |yielder|
+    number = 0
+    count = 1
+    loop do
+        number += count
+        count += 1
+        yielder.yield number
+    end
+end
+
+5.times { print triangular_numbers.next, " "}
+
+
+def infinitie_select(enum, &block) #check is it the same referention like in c++
+    Enumerator.new do |yielder|
+        enum.each do |value|
+            yielder.yield(value) if block.call(value)
+        end
+    end
+end
+
+printf("\n")
+
+p infinitie_select(triangular_numbers) {|val| val%10 == 0}.first(5)
+
+
+#implementing a function directly in the Enumerator class
+#working like "filters"
+class Enumerator
+    def infinitie_select( &block )
+    Enumerator.new do |yielder|
+        self.each do |value|
+            yielder.yield(value) if block.call(value) #check call function
+            end
+        end
+    end
+end
+
+p triangular_numbers.infinitie_select {|val| val%10 == 0 }.infinitie_select {|val| val.to_s =~ /3/}.first(5) # =~ is for regex
+
+
+
+#Lazy enumerators page 62
+
+
+#check this thing... IMPORTANT Lazy is supported in Ruby 2.0+
+def Integer.all
+    Enumerator.new do |yielder, n: 0| # n: 0 is a declaration and an initialization of a local variable
+        loop { yielder.yield(n += 1) }
+    end#.lazy #.lazy converts a basic generator to lazy enumerator in Ruby 1.9
+end
+
+p Integer.all.first(10)
+
+
+
