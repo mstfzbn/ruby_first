@@ -145,4 +145,136 @@ end
 p Integer.all.first(10)
 
 
+class File
+    def self.open_and_process(*args) #it's a class method, 
+        f = File.open(*args)         #collect the actual parameters passed to the method into an array named args
+        yield f
+        f.close()
+    end
+end
+
+
+class File
+    def self.my_open(*args)
+        result = file = File.new(*args)
+        #if there's a block , pass in the file and close the file when it returns
+        if block_given?
+            result = yiled file
+            file.close
+        end
+        result
+    end
+end
+
+#still, there is no error handling
+
+
+
+
+#Blocks Can Be Objects page 64
+# & as a prefix for last parameter in method definition
+# in that function, the block will be converted to class Proc object
+
+class ProcExample
+    def pass_in_block( &action )
+        @stored_proc = action
+    end
+
+    def use_proc( parameter )
+        @stored_proc.call( parameter )
+    end
+
+end
+
+eg = ProcExample.new
+eg.pass_in_block { |param| puts "The parameter is #{param}" }
+eg.use_proc(99)  #black be used later
+
+def create_block_object( &block )
+    block
+end
+
+bo = create_block_object { |param| puts "You called me with #{param}" }
+
+bo.call 99
+bo.call "cat"
+
+bo_2 = lambda { |param| puts "You called me with #{param} as lamda." }
+bo_2.call 199
+bo_2.call "lambda"
+
+
+#closure
+def n_times(thing)
+    lambda { |n| puts thing * n }
+end
+
+p1 = n_times(23)
+p1.call(3)
+p1.call(4)
+p2 = n_times("Hello ")
+p2.call(3)
+
+
+
+def power_proc_generator
+    value = 1
+    lambda { value += value }
+end
+
+
+power_proc = power_proc_generator
+
+puts power_proc.call
+puts power_proc.call
+puts power_proc.call
+
+#another way to create a ruby object
+#-> params { ... }
+
+proc1 = -> arg { puts "In proc1 with #{arg}" }
+#parentheses are optional
+proc2 = -> (arg1, arg2) { puts "In proc2 with #{arg1} and #{arg2}" }
+
+proc1.call "ant"
+proc2.call "cat", "dog"
+
+def my_if( condition, then_clause, else_clause )
+    if condition
+        then_clause.call
+    else
+        else_clause.call
+    end
+end
+
+5.times do |val| 
+    my_if val < 2, #condition
+            -> { puts "#{val} is small" }, #then clause
+            -> { puts "#{val} is big" } #else clause
+end
+
+
+
+def my_while( cond, &body )
+    while cond.call
+        body.call
+    end
+end
+
+a = 0
+
+my_while -> { a < 3 } do
+    puts a 
+    a += 1
+end
+
+proc2 = -> a, *b, &block do 
+    puts "a = #{a.inspect}"
+    puts "b = #{b.inspect}"
+    block.call #need to call given block
+end
+
+proc2.call(1, 2, 3, 4) { puts "in proc2 block"}
+
+#end of chapter 4.3 page 68
 
