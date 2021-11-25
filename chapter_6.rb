@@ -42,6 +42,21 @@ if (1..10) === 5
 end
 
 
+#params to as a function argument
+
+def some_colector_to_hash_func( first, **others_to_hash)
+    p first
+    p others_to_hash
+end
 
 
+some_colector_to_hash_func( 6, dog: "bark", cat: "meow", lion: "roar")
 
+
+def some_colector_to_array_func( first, *others_to_array)
+    p first
+    p others_to_array
+end
+
+
+some_colector_to_array_func( "first", 6, 7, 8, 9 )
