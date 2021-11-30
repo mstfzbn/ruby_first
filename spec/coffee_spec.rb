@@ -21,4 +21,14 @@ RSpec.describe 'A cup of coffee' do
             expect(coffee.price).to eq(1.25)
         end
     end
+
+    #some example at an idea level
+    it 'some pending example, status - todo'
+
+    #some incompleted example with missing implementation
+    it 'coffee light color' do
+        pending( 'Coffee color not implemented yet' )
+        expect(coffee.color).to eq('light')
+    end
 end
+
